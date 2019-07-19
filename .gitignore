@@ -1,2 +1,8 @@
 /src/.ipynb_checkpoints/
+<<<<<<< HEAD
 **/.DS_Store
+=======
+.DS_Store
+data_with_class/Canada/.DS_Store
+.ipynb_checkpoints/
+>>>>>>> 7034f17e2307e97408ab2974ff584b5661d4f682

@@ -2,22 +2,21 @@ const elem = document.getElementById("3d-graph");
 //let mydata = JSON.parse('./graph_try.json');
 
 const Graph = ForceGraph3D()(elem)
-    .jsonUrl("./graph_try.json")
+    .jsonUrl("./graph_try_all.json")
     .nodeAutoColorBy("user")
     .nodeLabel(node => `${node.user}: ${node.description}`)
     .onNodeHover(node => (elem.style.cursor = node ? "pointer" : null))
     .onNodeClick(node => {
-        
-
+        Graph.pauseAnimation();
         console.log(node);
         console.log(node.user);
         console.log(node.description);
-        let [nodeName, country] = node.description.split('_');
-        console.log(nodeName);
-        console.log(country)
-        if (nodeName && country) {
-            document.querySelector(".image-container img").setAttribute("src", "./imgs/selected_data/" + country + "/" + node.description + ".jpeg");
-        }
+        // let [nodeName, country] = node.description.split("_");
+        document
+            .querySelector(".image-container img")
+            .setAttribute("src", "./imgs/train/" + node.description + ".jpeg");
+
+        Graph.resumeAnimation();
     });
 
 let getOffsetLeft = function(obj) {
@@ -40,8 +39,15 @@ let getOffsetTop = function(obj) {
     return tmp;
 };
 
-let target = document.querySelector(".left-sidebar");
-target.onmousedown = function(ex) {
+// =============================== 拖拽
+
+let leftSidebar = document.querySelector(".left-sidebar");
+let rightSidebar = document.querySelector(".right-sidebar");
+
+leftSidebar.onmousedown = dragBox;
+rightSidebar.onmousedown = dragBox;
+function dragBox(ex) {
+    target = this;
     let x = ex.clientX - getOffsetLeft(target);
     let y = ex.clientY - getOffsetTop(target);
     //let x = ex.clientX - target.offsetLeft;
@@ -83,4 +89,6 @@ target.onmousedown = function(ex) {
         document.onmouseup = null;
     };
     return false;
-};
+}
+
+// ============================= 控制

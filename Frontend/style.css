@@ -98,10 +98,8 @@ canvas {
 
 
 
-.left-sidebar {
+.left-sidebar, .right-sidebar {
     position: fixed;
-    left: 10px;
-    top: 10px;
     height: 500px;
     width: 200px;
     color: white;
@@ -110,6 +108,16 @@ canvas {
     border: 2px solid gray;
     border-radius: 10px;
     padding: 10px;
+}
+
+.left-sidebar {
+    left: 10px;
+    top: 10px;
+}
+
+.right-sidebar {
+    right: 10px;
+    top: 10px;
 }
 
 .image-container {

@@ -1,0 +1,167 @@
+div[class*="item-container-obpd"],
+a[data-redirect*="paid.outbrain.com"],
+a[onmousedown*="paid.outbrain.com"] {
+    display: none !important;
+}
+
+a div[class*="item-container-ad"] {
+    height: 0px !important;
+    overflow: hidden !important;
+    position: absolute !important;
+}
+
+div[data-item-syndicated="true"] {
+    display: none !important;
+}
+
+.grv_is_sponsored {
+    display: none !important;
+}
+
+.zergnet-widget-related {
+    display: none !important;
+}
+
+.graph-info-msg {
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: lavender;
+    opacity: 0.7;
+    font-size: 22px;
+    position: absolute;
+    font-family: Sans-serif;
+}
+
+.grabbable {
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.grabbable:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+.scene-nav-info {
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+    color: slategrey;
+    opacity: 0.7;
+    font-size: 10px;
+}
+
+.scene-tooltip {
+    color: lavender;
+    font-size: 15px;
+}
+
+.scene-nav-info,
+.scene-tooltip {
+    position: absolute;
+    font-family: sans-serif;
+    pointer-events: none;
+}
+body {
+    margin: 0;
+    width: 100vw;
+}
+
+#3d-graph {
+    display: block;
+}
+
+#3d-graph > div {
+    position: relative;
+}
+
+#3d-graph > div > div {
+    position: relative;
+    width: 697px;
+    height: 696px;
+}
+
+.scene-tooltip {
+    top: 298px;
+    left: 423px;
+    transform: translate(-60.6887%, 21px);
+}
+
+canvas {
+    width: 697px;
+    height: 696px;
+}
+
+
+
+
+.left-sidebar, .right-sidebar {
+    position: fixed;
+    height: 500px;
+    width: 200px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.left-sidebar {
+    left: 10px;
+    top: 10px;
+}
+
+.right-sidebar {
+    right: 10px;
+    top: 10px;
+}
+
+.image-container {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+    background-color: white;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+}
+
+.cluster-container {
+    width: 100%;
+    height: 60%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+
+.cluster-container:hover{
+    overflow-y: auto;
+  }
+.cluster-container::-webkit-scrollbar {
+  width: 2px;
+}
+.cluster-container::-webkit-scrollbar-track-piece {
+  background-color: #fff;
+} /* 滚动条的内层滑轨背景颜色 */
+.cluster-container::-webkit-scrollbar-track {
+  background-color: #fff;
+} /* 滚动条的外层滑轨背景颜色 */
+.cluster-container::-webkit-scrollbar-thumb {
+  background-color: #d4d8e2;
+} /* 滚动条的内层滑块颜色 */
+.cluster-container::-webkit-scrollbar-button {
+  background-color: #fff;
+  display: none;
+} /* 滑轨两头的监
+
+
+/*   control panel */
+
+

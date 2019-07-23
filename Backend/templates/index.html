@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../static/style.css" />
+
+        <script src="../static/3d-force-graph.js"></script>
+
+        <!--<script src="../../dist/3d-force-graph.js"></script>-->
+    </head>
+
+    <body>
+        <div id="3d-graph">
+            <div>
+                <div>
+                    <div>
+                        <div class="scene-nav-info">
+                            Left-click: rotate, Mouse-wheel/middle-click: zoom,
+                            Right-click: pan
+                        </div>
+                        <div class="scene-tooltip"></div>
+                        <canvas></canvas>
+                    </div>
+                </div>
+                <div class="graph-info-msg"></div>
+            </div>
+        </div>
+
+        <div class="left-sidebar">
+            <div class="image-container">
+                <img src="../static/imgs/train/华中科技大学_China.jpeg" />
+            </div>
+            <div class="cluster-container"></div>
+        </div>
+        <div class="right-sidebar">
+            <div class="control-panel">
+                <form action="lualal" , method="GET">
+                    <div>
+                        <label for="Treshold">Treshold:</label>
+                        <input type="range" id="Treshold" />
+                    </div>
+                    <div>
+                        <label for="MaxDegree">MaxDegree:</label>
+                        <input type="range" id="MaxDegree" />
+                    </div>
+                    <div>
+                        <label for="msg">Message:</label>
+                        <textarea id="msg"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="../static/index.js"></script>
+    </body>
+</html>

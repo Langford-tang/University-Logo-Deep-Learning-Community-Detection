@@ -1,25 +1,60 @@
 const elem = document.getElementById("3d-graph");
 //let mydata = JSON.parse('./graph_try.json');
 
+let hidNodes = [];
+let colorDict = {};
+
+function updateGraph() {
+    Graph.graphData().nodes.forEach(element => {
+        // console.log(element.color);
+        colorDict[element.user] = element.color;
+    });
+
+    Graph.nodeRelSize(Graph.nodeRelSize());
+}
+
 const Graph = ForceGraph3D()(elem)
     .jsonUrl("./graph_try_all.json")
     .nodeAutoColorBy("user")
-    .nodeLabel(node => `${node.user}: ${node.description}`)
-    .onNodeHover(node => (elem.style.cursor = node ? "pointer" : null))
+    .nodeLabel(node => {
+        colorDict[node.user] = node.color;
+        return node.user + " : " + node.description;
+    })
+    .onNodeHover((node, preNode) => {
+        Graph.nodeColor(node => {
+            if (hidNodes.indexOf(node) !== -1) {
+                return "rgba(0,0,0,0)";
+            } else {
+                return colorDict[node.user];
+            }
+        });
+
+        hidNodes = [];
+        if (node) {
+            Graph.graphData().nodes.forEach(element => {
+                if (element.user !== node.user) {
+                    hidNodes.push(element);
+                }
+            });
+        }
+        updateGraph();
+        elem.style.cursor = node ? "pointer" : null;
+    })
     .onNodeClick(node => {
         Graph.pauseAnimation();
-        console.log(node);
-        console.log(node.user);
-        console.log(node.description);
+        // console.log(node);
+        // console.log(node.user);
+        // console.log(node.description);
         // let [nodeName, country] = node.description.split("_");
-        document
-            .querySelector(".image-container img")
-            .setAttribute("src", "./imgs/train/" + node.description + ".jpeg");
-
+        let img = document.querySelector(".image-container img");
+        img.setAttribute("src", getFileName(node))
+        img.setAttribute("title", node.description);
+        img.setAttribute("alt", node.description);
+        updateSameCluster(node);
         Graph.resumeAnimation();
     });
 
-let getOffsetLeft = function(obj) {
+let getOffsetLeft = function (obj) {
     var tmp = obj.offsetLeft;
     var val = obj.offsetParent;
     while (val != null) {
@@ -29,7 +64,7 @@ let getOffsetLeft = function(obj) {
     return tmp;
 };
 
-let getOffsetTop = function(obj) {
+let getOffsetTop = function (obj) {
     var tmp = obj.offsetTop;
     var val = obj.offsetParent;
     while (val != null) {
@@ -52,7 +87,7 @@ function dragBox(ex) {
     let y = ex.clientY - getOffsetTop(target);
     //let x = ex.clientX - target.offsetLeft;
     //let y = ex.clientY - target.offsetTop;
-    document.onmousemove = function(e) {
+    document.onmousemove = function (e) {
         let l = e.clientX - x;
         let t = e.clientY - y;
         if (l < 0) {
@@ -84,11 +119,38 @@ function dragBox(ex) {
         //windowMoveEv.preventDefault = function(){windowMoveEv.defaultPrevented = true;}
         //that.fire(windowMoveEv);
     };
-    document.onmouseup = function() {
+    document.onmouseup = function () {
         document.onmousemove = null;
         document.onmouseup = null;
     };
     return false;
 }
 
-// ============================= 控制
+// ============================= 添加同一个cluster的图片
+
+
+function getFileName(node) {
+    return "./imgs/train/" + node.description + ".jpeg"
+}
+
+function genImg(node) {
+    let container = document.createElement('div');
+    container.classList.add('image-container');
+    let elem = document.createElement('img');
+    elem.setAttribute("src", getFileName(node));
+    elem.setAttribute("title", node.description);
+    elem.setAttribute("alt", node.description);
+    elem.classList.add("same-cluster");
+    container.appendChild(elem);
+    return container;
+}
+
+function updateSameCluster(node) {
+    let container = document.querySelector(".cluster-container");
+    container.innerHTML = ''; // 
+    Graph.graphData().nodes.forEach(element => {
+        if (element.user === node.user && node.id !== element.id) {
+            document.querySelector(".cluster-container").appendChild(genImg(element));
+        }
+    })
+}

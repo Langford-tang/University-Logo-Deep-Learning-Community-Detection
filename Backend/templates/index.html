@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <div id="3d-graph" class="{{jsonname}}">
+        <div id="3d-graph" class="{{ jsonname }}">
             <div>
                 <div>
                     <div>
@@ -36,16 +36,38 @@
                 <form action="chpara" , method="POST">
                     <div>
                         <label for="Treshold">Treshold:</label>
-                        <input type="range" id="Treshold" min="0" max="100" step="0.1"/>
+                        <input
+                            type="range"
+                            id="Treshold"
+                            min="0"
+                            max="100"
+                            step="0.1"
+                        />
                     </div>
                     <div>
-                        <label for="MaxDegree" min="0" max="100" step="1">MaxDegree:</label>
-                        <input type="range" id="MaxDegree" />
+                        <label for="MaxDegree">MaxDegree:</label>
+                        <input
+                            type="range"
+                            id="MaxDegree"
+                            min="0"
+                            max="100"
+                            step="1"
+                        />
                     </div>
                     <div>
-                        <input type="submit" value="Change">
-                      </div>
+                        <input type="submit" value="Change" />
+                    </div>
                 </form>
+                <div>
+                    <label for="nodeSize">nodeSize:</label>
+                    <input
+                        type="range"
+                        id="MaxDegree"
+                        min="0"
+                        max="10"
+                        step="1"
+                    />
+                </div>
             </div>
         </div>
         <script src="../static/index.js"></script>

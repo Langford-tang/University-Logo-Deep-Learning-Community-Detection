@@ -1,7 +1,7 @@
 const elem = document.getElementById("3d-graph");
 //let mydata = JSON.parse('./graph_try.json');
 
-let jsonname = documentElement.querySelector("#3d-graph").getAttribute("class");
+let jsonname = document.getElementById("3d-graph").getAttribute("class");
 
 let hidNodes = [];
 let colorDict = {};
@@ -16,7 +16,7 @@ function updateGraph() {
 }
 
 const Graph = ForceGraph3D()(elem)
-    .jsonUrl("../static/" + jsonname);
+    .jsonUrl("../static/" + jsonname)
     .nodeAutoColorBy("user")
     .nodeLabel(node => {
         colorDict[node.user] = node.color;
@@ -79,10 +79,10 @@ let getOffsetTop = function (obj) {
 // =============================== 拖拽
 
 let leftSidebar = document.querySelector(".left-sidebar");
-let rightSidebar = document.querySelector(".right-sidebar");
+// let rightSidebar = document.querySelector(".right-sidebar");
 
 leftSidebar.onmousedown = dragBox;
-rightSidebar.onmousedown = dragBox;
+// rightSidebar.onmousedown = dragBox;
 function dragBox(ex) {
     target = this;
     let x = ex.clientX - getOffsetLeft(target);
@@ -156,3 +156,5 @@ function updateSameCluster(node) {
         }
     })
 }
+
+// =========================== 控制

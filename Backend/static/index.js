@@ -49,14 +49,14 @@ const Graph = ForceGraph3D()(elem)
         // console.log(node.description);
         // let [nodeName, country] = node.description.split("_");
         let img = document.querySelector(".image-container img");
-        img.setAttribute("src", getFileName(node))
+        img.setAttribute("src", getFileName(node));
         img.setAttribute("title", node.description);
         img.setAttribute("alt", node.description);
         updateSameCluster(node);
         Graph.resumeAnimation();
     });
 
-let getOffsetLeft = function (obj) {
+let getOffsetLeft = function(obj) {
     var tmp = obj.offsetLeft;
     var val = obj.offsetParent;
     while (val != null) {
@@ -66,7 +66,7 @@ let getOffsetLeft = function (obj) {
     return tmp;
 };
 
-let getOffsetTop = function (obj) {
+let getOffsetTop = function(obj) {
     var tmp = obj.offsetTop;
     var val = obj.offsetParent;
     while (val != null) {
@@ -89,7 +89,7 @@ function dragBox(ex) {
     let y = ex.clientY - getOffsetTop(target);
     //let x = ex.clientX - target.offsetLeft;
     //let y = ex.clientY - target.offsetTop;
-    document.onmousemove = function (e) {
+    document.onmousemove = function(e) {
         let l = e.clientX - x;
         let t = e.clientY - y;
         if (l < 0) {
@@ -121,7 +121,7 @@ function dragBox(ex) {
         //windowMoveEv.preventDefault = function(){windowMoveEv.defaultPrevented = true;}
         //that.fire(windowMoveEv);
     };
-    document.onmouseup = function () {
+    document.onmouseup = function() {
         document.onmousemove = null;
         document.onmouseup = null;
     };
@@ -130,15 +130,14 @@ function dragBox(ex) {
 
 // ============================= 添加同一个cluster的图片
 
-
 function getFileName(node) {
-    return "../static/imgs/train/" + node.description + ".jpeg"
+    return "../static/imgs/train/" + node.description + ".jpeg";
 }
 
 function genImg(node) {
-    let container = document.createElement('div');
-    container.classList.add('image-container');
-    let elem = document.createElement('img');
+    let container = document.createElement("div");
+    container.classList.add("image-container");
+    let elem = document.createElement("img");
     elem.setAttribute("src", getFileName(node));
     elem.setAttribute("title", node.description);
     elem.setAttribute("alt", node.description);
@@ -149,12 +148,34 @@ function genImg(node) {
 
 function updateSameCluster(node) {
     let container = document.querySelector(".cluster-container");
-    container.innerHTML = ''; // 
+    container.innerHTML = ""; //
     Graph.graphData().nodes.forEach(element => {
         if (element.user === node.user && node.id !== element.id) {
-            document.querySelector(".cluster-container").appendChild(genImg(element));
+            document
+                .querySelector(".cluster-container")
+                .appendChild(genImg(element));
         }
-    })
+    });
 }
 
 // =========================== 控制
+
+var volumeSlider = document.getElementById("volume");
+document.getElementById("volume").addEventListener(
+    "input",
+    function() {
+        update();
+    },
+    false
+);
+
+function update() {
+    var sldinput = volumeSlider.querySelector(".slider-input");
+    var sldthumb = volumeSlider.querySelector(".slider-thumb");
+    var sldlevel = volumeSlider.querySelector(".slider-level");
+    var val = parseInt(sldinput.value);
+    sldthumb.style.left = val * 5 + "%";
+    sldthumb.textContent = val;
+    sldlevel.style.width = val * 5 + "%";
+    Graph.nodeRelSize(val);
+}

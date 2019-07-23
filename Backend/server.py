@@ -1,6 +1,6 @@
 from flask import Flask, escape, request, render_template
 from werkzeug.serving import run_with_reloader
-
+from datetime import timedelta
 from os import path
 import os
 extra_dirs = ['./staic','./templates']
@@ -15,14 +15,16 @@ for extra_dir in extra_dirs:
 
 app = Flask(__name__, template_folder="./templates", static_folder="./static")
 app.jinja_env.auto_reload = True 
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
+app.config['DEBUG'] = True
 
-@app.route('/')
-def hello():
-    return render_template('index.html', jsonname = './graph_try_all.json')
-
-@app.route('/<jsonname>', methods=['GET'])
-def changeJson(jsonname):
-    return render_template('index.html', jsonname = jsonname)
+@app.route('/', methods=['GET'])
+def changeJson():
+    jsonname = request.args.get('file')
+    if not jsonname:
+        return render_template('index.html', jsonname = './graph_try_all.json')
+    else:
+        return render_template('index.html', jsonname = jsonname)
 
 # @app.route('/chpara', methods=['POST'])
 # def chpara():

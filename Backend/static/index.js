@@ -179,3 +179,45 @@ function update() {
     sldlevel.style.width = val * 5 + "%";
     Graph.nodeRelSize(val);
 }
+
+
+function updateForm() {
+    var sldinput = volumeSlider.querySelector(".slider-input");
+    var sldthumb = volumeSlider.querySelector(".slider-thumb");
+    var sldlevel = volumeSlider.querySelector(".slider-level");
+    var val = parseInt(sldinput.value);
+    sldthumb.style.left = val * 5 + "%";
+    sldthumb.textContent = val;
+    sldlevel.style.width = val * 5 + "%";
+    Graph.nodeRelSize(val);
+}
+
+
+// ========================= 更新数据
+
+let treshold = document.querySelector("#Treshold")
+let maxdegree = document.querySelector("#MaxDegree")
+let submitBtn = document.querySelector("#submit")
+
+submitBtn.addEventListener("click",function(e) {
+    e.preventDefault();
+    let formdata = new FormData();
+    formdata.append("treshold", treshold.value);
+    formdata.append("maxdegree", maxdegree.value);
+    fetch('/chpara', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: formdata
+    }).then(function(response) {
+        console.log(response)
+    })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });
+})
+

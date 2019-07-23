@@ -21,10 +21,11 @@ app.config['DEBUG'] = True
 @app.route('/', methods=['GET'])
 def changeJson():
     jsonname = request.args.get('file')
-    if not jsonname:
-        return render_template('index.html', jsonname = './graph_try_all.json')
-    else:
+
+    if jsonname:
         return render_template('index.html', jsonname = jsonname)
+    else:
+        return render_template('index.html', jsonname = './graph_try_all.json')
 
 # @app.route('/chpara', methods=['POST'])
 # def chpara():

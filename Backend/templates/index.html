@@ -2,9 +2,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="../static/style.css" />
+        <link href="https://cdn.bootcss.com/font-awesome/5.8.0/css/all.css" rel="stylesheet" />
+        <script src="../static/three.js"></script>
 
         <script src="../static/3d-force-graph.js"></script>
-
         <!--<script src="../../dist/3d-force-graph.js"></script>-->
     </head>
 
@@ -24,7 +25,16 @@
                 <div class="graph-info-msg"></div>
             </div>
         </div>
-
+        <div class="search-box">
+            <input
+                class="search-txt"
+                type="text"
+                placeholder="Type to search"
+            />
+            <a class="search-btn" href="#">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
         <div class="left-sidebar">
             <div class="image-container">
                 <img src="../static/imgs/train/华中科技大学_China.jpeg" />
@@ -32,31 +42,23 @@
         </div>
         <div class="right-sidebar">
             <div class="control-panel">
-                <form action="chpara" , method="POST">
+                <form action="chpara" , method="GET">
                     <div>
                         <label for="Treshold">Treshold:</label>
                         <input
-                            type="range"
+                            type="text"
                             id="Treshold"
-                            min="0"
-                            max="100"
-                            step="0.1"
-                        />
-                    </div>
-                    <div>
-                        <label for="MaxDegree">MaxDegree:</label>
-                        <input
-                            type="range"
-                            id="MaxDegree"
-                            min="0"
-                            max="100"
-                            step="1"
+                            name="Treshold"
+                            autocomplete="off"
                         />
                     </div>
                     <div>
                         <input type="submit" value="Change" id="submit" />
                     </div>
                 </form>
+                <div style="text-align: center">
+                    Ball Size
+                </div>
                 <div id="volume" class="slider">
                     <div class="slider-track">
                         <div class="slider-thumb">4</div>
@@ -70,8 +72,39 @@
                         max="20"
                     />
                 </div>
+                <div style="text-align: center">
+                    Image Size
+                </div>
+                <div id="ImageSize" class="slider">
+                    <div class="slider-track" id="slider-track">
+                        <div class="slider-thumb" id="slider-thumb">25%</div>
+                        <div class="slider-level" id="slider-level"></div>
+                    </div>
+                    <input
+                        disabled="disabled"
+                        class="slider-input"
+                        type="range"
+                        value="25"
+                        min="0"
+                        max="100"
+                        id="slider-input"
+                    />
+                </div>
+                
             </div>
+            
+            <div style="text-align: center">
+                <div style="text-align: center; margin: 10px auto">Display</div>
+                <select>
+                    <option value="Ball">Ball</option>
+                    <option value="Image">Image</option>
+                </select>
+            </div>
+            <!-- <div id="threshold" style="display: block; margin: 10px">
+                <input type="range" max="39.8" min="35.0" step="0.2">
+            </div> -->
             <div class="cluster-container"></div>
+
         </div>
         <script src="../static/index.js"></script>
     </body>

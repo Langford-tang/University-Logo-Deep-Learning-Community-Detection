@@ -134,6 +134,7 @@ canvas {
 }
 
 .cluster-container {
+    margin-top: 10px;
     width: 100%;
     height: 60%;
     overflow-y: hidden;
@@ -166,8 +167,8 @@ canvas {
 .slider {
     user-select: none;
     position: relative;
-    height: 3rem;
-    margin: 3rem auto;
+    height: 1rem;
+    margin: 1rem auto;
     display: flex;
     flex-direction: column;
 }
@@ -176,13 +177,13 @@ canvas {
     background-color: transparent;
     position: absolute;
     margin-left: -2.5%;
-    height: 2rem;
+    height: 1rem;
     outline: none;
     width: 100%;
 }
 .slider-input::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 2rem;
+    width: 1rem;
     height: 8rem;
 }
 .slider-thumb {
@@ -213,3 +214,57 @@ canvas {
     width: 25%;
     border-radius: 1rem;
 }
+
+
+input:disabled {
+    cursor: not-allowed;
+}
+
+
+/* 搜索栏 */
+.search-box {
+    position: absolute;
+    top: 6%;
+    right: 18%;
+    transform: translate(0%, -50%);
+    background: #2f3640;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px;
+}
+.search-btn {
+    color: #e84118;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+    text-decoration: none;
+}
+.search-txt {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0;
+}
+.search-box:hover > .search-txt {
+    width: 240px;
+    padding: 0 6px;
+}
+
+.search-box:hover > .search-btn {
+    background: white;
+}
+
+
+

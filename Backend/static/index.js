@@ -89,7 +89,7 @@ let Graph = ForceGraph3D()(elem)
     })
     .onNodeHover(hoverfunc)
     .onNodeClick(clickfunc)
-    .linkOpacity(0.8);
+    .linkOpacity(0.4);
 
 let getOffsetLeft = function(obj) {
     var tmp = obj.offsetLeft;
@@ -279,7 +279,7 @@ submitBtn.addEventListener("click", function(e) {
                 })
                 .onNodeHover(hoverfunc)
                 .onNodeClick(clickfunc)
-                .linkOpacity(0.8);
+                .linkOpacity(0.4);
         });
 });
 

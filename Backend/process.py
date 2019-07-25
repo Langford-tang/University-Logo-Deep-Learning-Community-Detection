@@ -23,10 +23,10 @@ def processData(dismatP, namesP, threshold):
 
     drawdata[drawdata > threshold] = 0
 
-    for i in range(len(drawdata)):
-        if sum(drawdata[i] > 0) > 30:
-            drawdata[:, i:i+1] = 0
-            drawdata[i:i+1, :] = 0
+    # for i in range(len(drawdata)):
+    #     if sum(drawdata[i] > 0) > 30:
+    #         drawdata[:, i:i+1] = 0
+    #         drawdata[i:i+1, :] = 0
 
     g = Graph.Adjacency((drawdata > 0).tolist(), "MAX")
     g.es['weight'] = drawdata[drawdata > 0]

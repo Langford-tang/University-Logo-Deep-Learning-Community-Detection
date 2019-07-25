@@ -12,8 +12,8 @@ import requests
 
 from process import processData
 
-dismatP = './static/npydata/dismat.npy'
-namesP = './static/npydata/names_train.npy'
+dismatP = './static/npydata/cluster6/dismat.npy'
+namesP = './static/npydata/cluster6/names_train.npy'
 
 extra_dirs = ['./staic','./templates']
 extra_files = extra_dirs[:]

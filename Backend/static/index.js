@@ -5,10 +5,47 @@ let jsonname = document.getElementById("3d-graph").getAttribute("class");
 
 let hidNodes = [];
 let colorDict = {};
-
+let clusterCount = 20;
 // document.querySelector("#threshold input").value = parseFloat(
 //     window.location.href.substring(48, 52)
 // );
+
+let clusterChanger = document.querySelector('.Cluster_Changer select');
+for (let i = 0; i < clusterCount; i++) {
+    option = document.createElement('option');
+    option.setAttribute('value', 'cluster' + i.toString());
+    option.innerText = 'Cluster' + i.toString();
+    clusterChanger.appendChild(option);
+}
+
+function changeCluster(name) {
+    fetch("/chcluster/" + name, {
+        method: "GET"
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonName) {
+            console.log(jsonName)
+            hidNodes = [];
+            colorDict = {};
+            Graph = ForceGraph3D()(elem)
+                .jsonUrl('../static/' + jsonName)
+                .nodeAutoColorBy("user")
+                .nodeLabel(node => {
+                    colorDict[node.user] = node.color;
+                    return node.user + " : " + node.description;
+                })
+                .onNodeHover(hoverfunc)
+                .onNodeClick(clickfunc)
+                .linkOpacity(0.4);
+            document.getElementById('Threshold').setAttribute('value', 30);
+        });
+}
+
+clusterChanger.addEventListener('change', function () {
+    changeCluster(this.value);
+});
 
 function changeDisplay() {
     let gData = Graph.graphData();
@@ -91,7 +128,7 @@ let Graph = ForceGraph3D()(elem)
     .onNodeClick(clickfunc)
     .linkOpacity(0.4);
 
-let getOffsetLeft = function(obj) {
+let getOffsetLeft = function (obj) {
     var tmp = obj.offsetLeft;
     var val = obj.offsetParent;
     while (val != null) {
@@ -101,7 +138,7 @@ let getOffsetLeft = function(obj) {
     return tmp;
 };
 
-let getOffsetTop = function(obj) {
+let getOffsetTop = function (obj) {
     var tmp = obj.offsetTop;
     var val = obj.offsetParent;
     while (val != null) {
@@ -124,7 +161,7 @@ function dragBox(ex) {
     let y = ex.clientY - getOffsetTop(target);
     //let x = ex.clientX - target.offsetLeft;
     //let y = ex.clientY - target.offsetTop;
-    document.onmousemove = function(e) {
+    document.onmousemove = function (e) {
         let l = e.clientX - x;
         let t = e.clientY - y;
         if (l < 0) {
@@ -156,7 +193,7 @@ function dragBox(ex) {
         //windowMoveEv.preventDefault = function(){windowMoveEv.defaultPrevented = true;}
         //that.fire(windowMoveEv);
     };
-    document.onmouseup = function() {
+    document.onmouseup = function () {
         document.onmousemove = null;
         document.onmouseup = null;
     };
@@ -199,7 +236,7 @@ function updateSameCluster(node) {
 var volumeSlider = document.getElementById("volume");
 document.getElementById("volume").addEventListener(
     "input",
-    function() {
+    function () {
         update();
     },
     false
@@ -219,7 +256,7 @@ function update() {
 let imgsize = document.getElementById("ImageSize");
 document.getElementById("ImageSize").addEventListener(
     "input",
-    function() {
+    function () {
         updateImageSizeBtn();
     },
     false
@@ -250,23 +287,23 @@ function updateImageSizeBtn() {
 
 // ========================= 更新数据
 
-let treshold = document.querySelector("#Treshold");
+let threshold = document.querySelector("#Threshold");
 //let maxdegree = document.querySelector("#MaxDegree")
 let submitBtn = document.querySelector("#submit");
 
-submitBtn.addEventListener("click", function(e) {
+submitBtn.addEventListener("click", function (e) {
     e.preventDefault();
     // let formdata = new FormData();
-    // formdata.append("treshold", treshold.value);
+    // formdata.append("threshold", threshold.value);
     // formdata.append("maxdegree", maxdegree.value);
-    // data = 'treshold=' + treshold.value + '&maxdegree=' + maxdegree.value;
-    fetch("/chpara/" + treshold.value, {
+    // data = 'threshold=' + threshold.value + '&maxdegree=' + maxdegree.value;
+    fetch("/chpara/" + threshold.value, {
         method: "GET"
     })
-        .then(function(response) {
+        .then(function (response) {
             return response.json();
         })
-        .then(function(jsonName) {
+        .then(function (jsonName) {
             console.log(jsonName)
             hidNodes = [];
             colorDict = {};
@@ -287,8 +324,8 @@ submitBtn.addEventListener("click", function(e) {
 
 let tempfunc = undefined;
 
-let display = document.querySelector("select");
-display.addEventListener("change", function() {
+let display = document.querySelector(".right-sidebar select");
+display.addEventListener("change", function () {
     console.log(this.value);
     if (this.value === "Image") {
         tempfunc = Graph.nodeThreeObject();
@@ -311,7 +348,7 @@ display.addEventListener("change", function() {
             sprite.scale.set(12, 12);
             obj.add(sprite);
             return obj;
-        }).onNodeHover((node, prenode) => {});
+        }).onNodeHover((node, prenode) => { });
 
         document
             .querySelector(".slider-input")
@@ -336,25 +373,49 @@ function updateImageSize(newSize) {
 
 // ============================== 搜索框
 
-// setTimeout(() => {
-//     document
-//         .querySelector("#threshold input")
-//         .addEventListener("change", function() {
-//             console.log(this.value);
-//             console.log(window.location.href.substring(0, 48));
-//             console.log(this.value == parseInt(this.value));
-//             if (parseInt(this.value) == this.value) {
-//                 data =
-//                     window.location.href.substring(0, 48) +
-//                     this.value +
-//                     ".0.json";
-//             } else {
-//                 data =
-//                     window.location.href.substring(0, 48) +
-//                     this.value +
-//                     ".json";
-//             }
-//             console.log(data);
-//             window.location.href = data;
-//         });
-// }, 1000);
+
+let searchBox = document.querySelector('.search-txt')
+let searchButton = document.querySelector(".search-box input[type='submit']")
+searchButton.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    let id = searchBox.value;
+    let gData = Graph.graphData();
+
+    fetch("/search/" + id, {
+        method: "GET"
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data) {
+                for (const [key, value] of Object.entries(data.prediction)) {
+                    changeCluster('cluster' + value.toString())
+                    clusterChanger.selectedIndex = value;
+                }
+            }
+
+
+
+            setTimeout(function () {
+                for (node of gData.nodes) {
+                    if (node.description.indexOf(id) > -1) {
+                        const distance = 40;
+                        const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+                        Graph.cameraPosition(
+                            { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+                            node, // lookAt ({ x, y, z })
+                            3000  // ms transition duration
+                        );
+                        break;
+                    }
+                }
+            }, 2000);
+
+        });
+
+
+
+})

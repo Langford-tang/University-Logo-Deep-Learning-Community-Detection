@@ -262,3 +262,4 @@ Backend/.vscode/*
 .history
 
 # End of https://www.gitignore.io/api/visualstudiocode
+*.json

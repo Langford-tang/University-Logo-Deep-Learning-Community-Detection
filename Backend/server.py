@@ -12,8 +12,12 @@ import requests
 
 from process import processData
 
-dismatP = './static/npydata/cluster6/dismat.npy'
-namesP = './static/npydata/cluster6/names_train.npy'
+# dismatP = './static/npydata/cluster6/dismat.npy'
+# namesP = './static/npydata/cluster6/names_train.npy'
+dismatP = '../src/spark/matrics/cluster1/dis_matric.npy'
+namesP = '../src/spark/matrics/cluster1/names.npy'
+nameList = np.load('../src/names_train.npy')
+nameCluster = pd.read_csv('../src/spark/name_cluster')
 
 extra_dirs = ['./staic','./templates']
 extra_files = extra_dirs[:]
@@ -41,7 +45,7 @@ def changeJson():
 
 @app.route('/chpara/<threshold>', methods=['GET'])
 def chpara(threshold):
-    #treshold = request.form.get('Treshold')
+    #threshold = request.form.get('Threshold')
     # maxdegree = request.form.get('maxdegree')
     print(threshold)
     print("\n\n\n\n")
@@ -51,6 +55,23 @@ def chpara(threshold):
     #return render_template('index.html', jsonname = newfile)
     return jsonify(newfile)
 
+@app.route('/chcluster/<cluster>', methods=['GET'])
+def chCluster(cluster):
+    dismatP = f'../src/spark/matrics/{cluster}/dis_matric.npy'
+    namesP = f'../src/spark/matrics/{cluster}/names.npy'
+    newfile = processData(dismatP, namesP, 30)
+    return jsonify(newfile)
+
+@app.route('/search/<item>', methods=['GET'])
+def search(item):
+    candicate = nameCluster[nameCluster['name'].apply(lambda x : x.find(item) > -1)]
+    if candicate.empty:
+        return jsonify(None)
+    else:
+        print("查到了!")
+        return jsonify(candicate[['prediction', 'name']].head(1).to_dict())
+
 if __name__ == '__main__':
-    app.run(debug=True, extra_files=extra_files, host='0.0.0.0', port=80)
+    # app.run(debug=True, extra_files=extra_files, host='0.0.0.0', port=80)
+    app.run(debug=True, extra_files=extra_files, host='127.0.0.1', port=3000)
     # app.run(debug=True, extra_files=extra_files)

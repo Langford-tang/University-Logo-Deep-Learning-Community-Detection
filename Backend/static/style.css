@@ -257,7 +257,7 @@ input:disabled {
     line-height: 40px;
     width: 0;
 }
-.search-box:hover > .search-txt {
+.search-box:hover .search-txt {
     width: 240px;
     padding: 0 6px;
 }
@@ -268,3 +268,21 @@ input:disabled {
 
 
 
+
+
+.Cluster_Changer {
+    position: absolute;
+    top: 1%;
+    right: 50%;
+    /* transform: translate(0%, -50%); */
+    /* background: #2f3640; */
+    height: 40px;
+    z-index: 10000;
+    /* border-radius: 40px; */
+    /* padding: 10px; */
+    color: #d4d8e2;
+}
+
+.search-box input[type='submit'] {
+    z-index: -1000;
+}

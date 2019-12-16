@@ -4,7 +4,7 @@ from datetime import timedelta
 from os import path
 import os
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from igraph import *
 import pandas as pd
 import requests

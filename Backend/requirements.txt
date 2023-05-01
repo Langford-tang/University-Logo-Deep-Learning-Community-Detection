@@ -1,6 +1,6 @@
 numpy==1.17.4
 pandas==0.25.3
-Flask==1.1.1
+Flask==2.3.2
 requests==2.22.0
 Werkzeug==0.16.0
 python_igraph==0.7.1.post6
